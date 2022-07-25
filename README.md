@@ -1,2 +1,2 @@
 # internship_project
-trying different approach for project
+go to master branch for code
