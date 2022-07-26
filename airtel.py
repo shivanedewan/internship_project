@@ -154,36 +154,45 @@ airtel_data='''{
    }
 }'''
 def return_argumentlist():
-    with open("robofiles/header.csv",'r') as csv_file:
-        csv_reader=csv.reader(csv_file)
+    with open(r"C:\Users\hp\PycharmProjects\testproject\robofiles\header.csv") as csv_file:
 
-        for line in csv_reader:
-            last=line
-        return last
+      csv_reader=csv.reader(csv_file)
+      lst=[]
+      for line in csv_reader:
+         lst.append(line)
+      
+      lst.pop(0)
+
+
+
+      return lst
 
 # for each line
 
-def return_json(given,given_length, given_type, pre="", post=""):
-    data = json.loads(airtel_data)
+def return_json(z,given,given_length, given_type, pre="", post=""):
+    if z=="":
+        data = json.loads(airtel_data)
+    else:
+        data=json.loads(z)
 
     n = len(pre)
     given_length=int(given_length)
     if n == 0:
         n = len(post)
-    z = given_length - n
+    remain_length = given_length - n
 
 
 
 
     if given_type == "numeric":
 
-        res = ''.join(random.choices(string.digits, k=z))
+        res = ''.join(random.choices(string.digits, k=remain_length))
 
     elif given_type == "alphanumeric":
-        res = ''.join(random.choices(string.ascii_letters + string.digits, k=z))
+        res = ''.join(random.choices(string.ascii_letters + string.digits, k=remain_length))
 
     else:
-        res = ''.join(random.choices(string.ascii_letters, k=z))
+        res = ''.join(random.choices(string.ascii_letters, k=remain_length))
 
     change_to = pre + res + post
     lst = given.split(".")
@@ -199,8 +208,10 @@ def return_json(given,given_length, given_type, pre="", post=""):
     z = json.dumps(data)
     return z
 
-
-z=return_json(*return_argumentlist())
+matrix=return_argumentlist()
+z=""
+for elt in matrix:
+   z=return_json(z,*elt)
 print(z)
 
 
